@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarbonTracker</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img src="./assets/logo.png" alt="Logo" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Carbon Tracker</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="login.html" class="btn btn-primary">Login/Signup</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Carbon Footprint Calculator -->
+    <div class="container mt-5">
+      <h2 class="text-center mb-4">Carbon Footprint Calculator</h2>
+      <form class="carbon-form"></form>
+        <div class="form-group">
+          <label for="distance">Distance (Kms)</label>
+          <input type="number" class="form-control" id="distance" min="0.1" max="1000.0" step="0.1" required>
+        </div>
+        <div class="form-group">
+          <label for="mode">Mode of Travel</label>
+          <select class="form-control" id="mode" required>
+            <option value="">Select a mode</option>
+            <option value="walk">Walk</option>
+            <option value="bicycle">Bicycle</option>
+            <option value="car">Car</option>
+            <option value="electric_vehicle">Electric Vehicle</option>
+            <option value="public_transport_bus">Public Transport (Bus)</option>
+            <option value="public_transport_train">Public Transport (Train)</option>
+            <option value="motorcycle">Motorcycle</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="instead">Instead of</label>
+          <select class="form-control" id="instead" required>
+            <option value="">Select an alternative</option>
+            <option value="walk">Walk</option>
+            <option value="bicycle">Bicycle</option>
+            <option value="car">Car</option>
+            <option value="electric_vehicle">Electric Vehicle</option>
+            <option value="public_transport_bus">Public Transport (Bus)</option>
+            <option value="public_transport_train">Public Transport (Train)</option>
+            <option value="motorcycle">Motorcycle</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" class="form-control" id="date" required>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="calculateCarbonSavings()">Calculate</button>
+      </form>
+    </div>
+
+    <!-- Carbon Savings Display -->
+    <div class="container mt-5">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Carbon Savings</h2>
+          <p class="card-text" id="carbonSavings">0 grams CO2e</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function calculateCarbonSavings() {
+        const distance = parseFloat(document.getElementById('distance').value);
+        const mode = document.getElementById('mode').value;
+        const instead = document.getElementById('instead').value;
+        const date = document.getElementById('date').value;
+
+        const modeData = getActivityData(mode);
+        const insteadData = getActivityData(instead);
+
+        if (!modeData || !insteadData) {
+          displayMessage('Please select valid modes.', false);
+          return;
+        }
+
+        const modeEmissions = modeData.carbonFootprint * (distance * 10);
+        const insteadEmissions = insteadData.carbonFootprint * (distance * 10);
+
+        const carbonSavings = insteadEmissions - modeEmissions;
+        document.getElementById('carbonSavings').textContent = `${(carbonSavings).toFixed(2)} grams CO2e`;
+      }
+
+      function getActivityData(activityName) {
+        const activities = [
+          { name: 'walk', carbonFootprint: 0 },
+          { name: 'bicycle', carbonFootprint: 0 },
+          { name: 'car', carbonFootprint: 27.1 },
+          { name: 'electric_vehicle', carbonFootprint: 2 },
+          { name: 'public_transport_bus', carbonFootprint: 10.5 },
+          { name: 'public_transport_train', carbonFootprint: 1.4 },
+          { name: 'motorcycle', carbonFootprint: 7.2 }
+        ];
+        return activities.find(activity => activity.name === activityName);
+      }
+
+      function displayMessage(message, isSuccess) {
+        const messageArea = document.getElementById('messageArea1');
+        messageArea.textContent = message;
+        messageArea.className = isSuccess ? 'success' : 'error';
+        setTimeout(() => {
+          messageArea.textContent = '';
+          messageArea.className = '';
+        }, 3000);
+      }
+
+      // Call the calculateCarbonSavings function
+      calculateCarbonSavings();
+    </script>
+  
+</html>
