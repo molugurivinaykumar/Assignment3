@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login to Carbon Tracker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="./assets/logo.png" alt="Logo" height="40">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+
+<div class="login-container">
+    <h1 class="login-label">User Login</h1>
+    <form class="login-form" action="index.html" method="post" name="loginForm" onsubmit="return validateLogin()">
+        <div class="login-font">Email or Phone</div>
+        <input autocomplete="off" type="text" name="loginEmail" class="login-email">
+        <div id="login-email-error" class="login-error" style="display: none;">Please fill up your Email or Phone</div>
+        <div class="login-font login-font2">Password</div>
+        <input type="password" name="loginPassword" class="login-password">
+        <div id="login-pass-error" class="login-error" style="display: none;">Please fill up your Password</div>
+        <button type="submit" class="login-button">Login</button>
+    </form>
+    <div class="login-options">
+        <div class="login-option">
+            <button class="login-google"><i class="fab fa-google"></i> Login with Google</button>
+        </div>
+        <div class="login-option">
+            <button class="login-facebook"><i class="fab fa-facebook"></i> Login with Facebook</button>
+        </div>
+    </div>
+    <div class="signup-link">
+        Not a user? <button class="signup-link-button" onclick="showSignupForm()">Signup here</button>
+    </div>
+</div>
+
+<div class="signup-container" style="display: none;">
+    <h1 class="signup-label">User Signup</h1>
+    <form class="signup-form" action="index.html" method="post" name="signupForm" onsubmit="return validateSignup()">
+        <div class="signup-font">Full Name</div>
+        <input autocomplete="off" type="text" name="signupName" class="signup-name">
+        <div id="signup-name-error" class="signup-error" style="display: none;">Please fill up your Full Name</div>
+        <div class="signup-font signup-font2">Email</div>
+        <input autocomplete="off" type="email" name="signupEmail" class="signup-email">
+        <div id="signup-email-error" class="signup-error" style="display: none;">Please fill up a valid Email</div>
+        <div class="signup-font signup-font2">Password</div>
+        <input type="password" name="signupPassword" class="signup-password">
+        <div id="signup-pass-error" class="signup-error" style="display: none;">Please fill up your Password</div>
+        <button type="submit" class="signup-button">Signup</button>
+    </form>
+    <div class="login-link">
+        Already a user? <button class="login-link-button" onclick="showLoginForm()">Login here</button>
+    </div>
+</div>
+
+<script src="./js/index.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+  <script src="./js/index.js"></script>
+</body>
+</html>
